@@ -3,13 +3,13 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}
   labels:
-    {{ include "monitor.labels" . | nindent 4 }}
+    {{- include "flask-aws-monitor.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: 5001
+      targetPort: {{ .Values.service.port }}
       protocol: TCP
       name: http
   selector:
-    {{ include "monitor.labels" . | nindent 4 }}
+    {{- include "flask-aws-monitor.selectorLabels" . | nindent 4 }}

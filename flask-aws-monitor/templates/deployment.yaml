@@ -3,18 +3,16 @@ kind: Deployment
 metadata:
   name: {{ .Release.Name }}
   labels:
-    {{ include "monitor.labels" . | nindent 4 }}
+    {{- include "flask-aws-monitor.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
-      {{ include "monitor.labels" . | nindent 6 }}
+      {{- include "flask-aws-monitor.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{ include "monitor.labels" . | nindent 8 }}
+        {{- include "flask-aws-monitor.labels" . | nindent 8 }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
