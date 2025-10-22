@@ -10,7 +10,7 @@ service:
   port: 5001
 
 ingress:
-  enabled: false
+  enabled: true
  # host: flask.example.com
 
 env:
