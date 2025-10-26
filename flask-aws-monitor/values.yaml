@@ -6,7 +6,7 @@ image:
   pullPolicy: Always
 
 service:
-  type: ClusterIP
+  type: LoadBalacer
   port: 5001
 
 ingress:
