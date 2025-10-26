@@ -18,7 +18,7 @@ spec:
 
   environment {
     DOCKERHUB_USERNAME = credentials('omribe-username')
-    DOCKERHUB_PASSWORD = credentials('omribe-password')
+    DOCKERHUB_PASSWORD = credentials('DOCKERHUB PASSWORD')
     IMAGE_NAME      = 'docker.io/omribe/aws-dashboard'
     DOCKERFILE_PATH = 'dockerfile'
     BUILD_CONTEXT   = '.'
