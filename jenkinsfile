@@ -18,7 +18,7 @@ spec:
 
   environment {
     DOCKERHUB_USERNAME = credentials('omribe-username')
-    DOCKERHUB_PASSWORD = credentials('DOCKERHUB PASSWORD')
+    DOCKERHUB_PASSWORD = credentials('omribe-password')
     IMAGE_NAME      = 'docker.io/omribe/aws-dashboard'
     DOCKERFILE_PATH = 'dockerfile'
     BUILD_CONTEXT   = '.'
@@ -50,7 +50,9 @@ spec:
         }
         stage('Security Scan') {
           steps {
-            sh 'echo "[MOCK] bandit/trivy scan passed (skipped for Kaniko setup)"'
+            sh '''
+              echo "[MOCK] bandit/trivy scan passed (skipped for Kaniko setup)"
+            '''
           }
         }
       }
