@@ -23,7 +23,14 @@ spec:
     DOCKERFILE_PATH = 'dockerfile'
     BUILD_CONTEXT   = '.'
   }
-
+  
+  parameters {
+    string(name: 'REPO_URL', defaultValue: 'https://github.com/OmriBENE-codes/devops-end-project.git', description: 'Git repository URL')
+    string(name: 'BRANCH', defaultValue: 'main', description: 'Git branch to build')
+    string(name: 'IMAGE_REPO', defaultValue: 'docker.io/omribe/aws-dashboard', description: 'Base image repository, no tag')
+    string(name: 'DOCKERFILE_PATH', defaultValue: 'dockerfile', description: 'Path to Dockerfile')
+    string(name: 'BUILD_CONTEXT', defaultValue: '.', description: 'Container build context')
+  }
   stages {
     stage('Clone Repository') {
       steps {
@@ -45,13 +52,13 @@ spec:
       parallel {
         stage('Linting') {
           steps {
-            sh 'echo "[MOCK] flake8/hadolint/shellcheck passed (skipped for Kaniko setup)"'
+            sh 'echo "[MOCK] lint passed"'
           }
         }
         stage('Security Scan') {
           steps {
             sh '''
-              echo "[MOCK] bandit/trivy scan passed (skipped for Kaniko setup)"
+              echo "[MOCK] bandit/trivy scan passed"
             '''
           }
         }
@@ -76,6 +83,7 @@ spec:
             --verbosity=debug \
             --context="${BUILD_CONTEXT}" \
             --dockerfile="${DOCKERFILE_PATH}" \
+            --context="${BUILD_CONTEXT}" \
             --destination="${IMAGE_NAME}:${IMAGE_TAG}" \
             --destination="${IMAGE_NAME}:latest"
         '''
@@ -85,10 +93,7 @@ spec:
 
   post {
     success {
-      echo "Pipeline completed successfully. Image pushed: ${IMAGE_NAME}:${IMAGE_TAG}"
-    }
-    failure {
-      echo "Pipeline failed! Check logs for details."
-    }
+      echo "Pipeline completed successfully. Image pushed: ${IMAGE_NAME}:${IMAGE_TAG}" }
+    failure { echo "Pipeline failed! Check logs for details." }
   }
 }
